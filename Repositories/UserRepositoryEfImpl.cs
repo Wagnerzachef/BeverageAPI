@@ -1,4 +1,6 @@
 using BeverageAPI.Models;
+using CIS106ExceptionHandling.exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace BeverageAPI.Repositories{
     public class UserRepositoryEfImpl : IUserRepository
@@ -34,8 +36,14 @@ namespace BeverageAPI.Repositories{
 
         public User UpdateUserById(User userToChange)
         {
-            dbContext.Users.Update(userToChange);
-            dbContext.SaveChanges();
+            try {
+                dbContext.Users.Update(userToChange);
+                dbContext.SaveChanges();
+            }
+            catch (DbUpdateException){
+                Console.WriteLine("Error: Could not save changes to database.");
+            }
+            
             return userToChange;
         }
     }
