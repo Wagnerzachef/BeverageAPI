@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using BeverageAPI.Repositories;
 using BeverageAPI.Models.Requests;
 using BeverageAPI.Models;
+using CIS106ExceptionHandling.exceptions;
 
 namespace BeverageAPI.Controllers
 {
@@ -23,8 +24,12 @@ namespace BeverageAPI.Controllers
             User user = new User();
             user.Name = request.Name;
             user.Age = request.Age;
-            
-            return userRepository.CreateUser(user);
+
+            if(!ModelState.IsValid) {
+                throw new InvalidInputException("User Create Request is invalid", ModelState);
+            } else {
+                return userRepository.CreateUser(user);
+            }
         }
 
         [HttpGet("{id}", Name = "GetUserById")]
@@ -45,16 +50,18 @@ namespace BeverageAPI.Controllers
             User? userToUpdate = userRepository.GetUserById(id);
 
             // If it's null (not found) throw an exception stating such.
-            if (userToUpdate == null) {
-                throw new Exception($"User {id} was not found.");
-            }
-
-            // Map our updated data to our existing ski brand.
+            if (userToUpdate != null) {
+                // Map our updated data to our existing ski brand.
             userToUpdate.Age = request.Age;
             userToUpdate.Name = request.Name;
 
             // Return our updated ski brand to the requester.
             return userRepository.UpdateUserById(userToUpdate);
+            } else {
+                throw new EntityNotFoundException($"User with ID {id} could not be found. Unable to update user.");
+            }
+
+            
         }
 
 
@@ -63,11 +70,12 @@ namespace BeverageAPI.Controllers
             // Find the user we need to delete by its ID.
             User? userToDelete = userRepository.GetUserById(id);
 
-            if (userToDelete == null) {
-                throw new Exception($"Ski brand {id} was not found.");
+            if (userToDelete != null) {
+                userRepository.DeleteUserById(userToDelete);
+            } else {
+                throw new EntityNotFoundException($"User with ID {id} could not be found. Unable to Delete user.");
             }
 
-            userRepository.DeleteUserById(userToDelete);
         }
 
         // CRUD endpoints will be added here

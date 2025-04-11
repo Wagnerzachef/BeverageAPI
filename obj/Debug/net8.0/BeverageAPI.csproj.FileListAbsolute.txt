@@ -166,3 +166,4 @@ C:\Users\stevz\Desktop\CIS-106\BeverageAPI\bin\Debug\net8.0\runtimes\win\lib\net
 C:\Users\stevz\Desktop\CIS-106\BeverageAPI\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\stevz\Desktop\CIS-106\BeverageAPI\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
 C:\Users\stevz\Desktop\CIS-106\BeverageAPI\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\Users\stevz\Desktop\CIS-106\BeverageAPI\obj\Debug\net8.0\BeverageAPI.sourcelink.json
