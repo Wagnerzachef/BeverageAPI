@@ -3,6 +3,7 @@ using BeverageAPI.Repositories;
 using BeverageAPI.Models.Requests;
 using BeverageAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using CIS106ExceptionHandling.exceptions;
 
 namespace BeverageAPI.Controllers
 {
@@ -10,15 +11,15 @@ namespace BeverageAPI.Controllers
     [ApiController]
     public class BeverageController : ControllerBase
     {
-        private readonly BeverageDbContext dbContext;
+        private readonly IBeverageRepository beverageRepository;
 
-        public BeverageController(BeverageDbContext context)
+        public BeverageController(IBeverageRepository context)
         {
-            dbContext = context;
+            beverageRepository = context;
         }
 
         [HttpPost("", Name = "CreateBeverage")]
-        public Beverage CreateSkiModel(BeverageCreateRequest request) {
+        public Beverage CreateBeverage(BeverageCreateRequest request) {
             // Map BeverageCreateRequest to Beverage to create.
             Beverage beverage = new Beverage { 
                 BeverageName = request.BeverageName,
@@ -28,33 +29,26 @@ namespace BeverageAPI.Controllers
                 UserId = request.UserId
             };
 
-            // Add the Beverage to the change tracker and database.
-            dbContext.Beverages.Add(beverage);
-            dbContext.SaveChanges();
-
-            // Return our newly saved Beverage.
-            return beverage;
+            if(!ModelState.IsValid) {
+                throw new InvalidInputException("Beverage Create Request is invalid", ModelState);
+            } else {
+                return beverageRepository.CreateBeverage(beverage);
+            }
         }
 
         [HttpGet("{id}", Name = "GetBeverageById")]
         public Beverage? GetBeverageById(int id, [FromQuery] bool includeUserData = false) {
             // This allows us to dynamically modify the query before executing it.
-            var query = dbContext.Beverages.AsQueryable();
-            // Conditionally include user data if includeBrandData is true.
-            if (includeUserData) {
-                query = query.Include(beverage => beverage.User);
-            }
-            // Execute the query, returning the beverage that matches this criteria.
-            return query.FirstOrDefault(beverage => beverage.Id == id);
+            return beverageRepository.GetBeverageById(id, includeUserData);
         }
 
         [HttpGet("/Beverages", Name = "GetBeverages")]
         public List<Beverage> GetBeverages() {
-            return dbContext.Beverages.ToList();
+            return beverageRepository.GetBeverages();
         }
         [HttpGet("/BeveragesWithUSers", Name = "GetBeveragesWithUser")]
         public List<Beverage> GetBeveragesWithUser() {
-            return dbContext.Beverages.Include(beverage => beverage.User).ToList();
+            return beverageRepository.GetBeveragesWithUser();
         }
     }
 }
