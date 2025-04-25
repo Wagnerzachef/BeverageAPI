@@ -18,6 +18,7 @@ builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUserRepository, UserRepositoryEfImpl>();
+builder.Services.AddScoped<IBeverageRepository, BeverageRepositoryEfImpl>();
 
 builder.Services.AddDbContext<BeverageDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))

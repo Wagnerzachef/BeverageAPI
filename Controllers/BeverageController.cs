@@ -21,13 +21,13 @@ namespace BeverageAPI.Controllers
         [HttpPost("", Name = "CreateBeverage")]
         public Beverage CreateBeverage(BeverageCreateRequest request) {
             // Map BeverageCreateRequest to Beverage to create.
-            Beverage beverage = new Beverage { 
-                BeverageName = request.BeverageName,
-                FluidOz = request.FluidOz,
-                CaffeineConent = request.CaffeineConent,
-                DateDrank = request.DateDrank,
-                UserId = request.UserId
-            };
+            Beverage beverage = new Beverage (); 
+                beverage.BeverageName = request.BeverageName;
+                beverage.FluidOz = request.FluidOz;
+                beverage.CaffeineConent = request.CaffeineConent;
+                beverage.DateDrank = request.DateDrank;
+                beverage.UserId = request.UserId;
+            
 
             if(!ModelState.IsValid) {
                 throw new InvalidInputException("Beverage Create Request is invalid", ModelState);

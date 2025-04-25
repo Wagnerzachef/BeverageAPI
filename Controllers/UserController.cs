@@ -78,6 +78,11 @@ namespace BeverageAPI.Controllers
 
         }
 
+        [HttpGet("/UserWithBeverages", Name = "GetUserWithBeverages")]
+        public User GetUserWithBeverage(int id, [FromQuery] bool includeUserData = false) {
+            return userRepository.GetUserWithBeverage(id, includeUserData);
+        }
+
         // CRUD endpoints will be added here
     }
 }

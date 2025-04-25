@@ -1,5 +1,6 @@
 using BeverageAPI.Models;
 using CIS106ExceptionHandling.exceptions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BeverageAPI.Repositories{
@@ -32,6 +33,15 @@ namespace BeverageAPI.Repositories{
         public List<User> GetUsers()
         {
             return dbContext.Users.ToList();
+        }
+
+        public User GetUserWithBeverage(int id, [FromQuery] bool includeUserData = false)
+        {
+            var query = dbContext.Users.AsQueryable();
+            if (includeUserData) {
+                query = query.Include(user => user.Beverages);
+            }
+            return query.FirstOrDefault(user => user.Id == id);
         }
 
         public User UpdateUserById(User userToChange)
