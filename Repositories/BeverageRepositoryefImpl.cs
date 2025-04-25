@@ -27,6 +27,15 @@ namespace BeverageAPI.Repositories{
             return query.FirstOrDefault(beverage => beverage.Id == id);
         }
 
+        public List<Beverage?> GetBeverageByUserId(int id, bool includeUserData = false)
+        {
+            var query = dbContext.Beverages.AsQueryable();
+            if (includeUserData) {
+                query = query.Include(beverage => beverage.User);
+            }
+            return query.Where(beverage => beverage.UserId == id).ToList();
+        }
+
         public List<Beverage> GetBeverages()
         {
             return dbContext.Beverages.ToList();

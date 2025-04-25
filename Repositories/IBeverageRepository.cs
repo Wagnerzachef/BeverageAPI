@@ -7,5 +7,6 @@ namespace BeverageAPI.Repositories{
         Beverage? GetBeverageById(int id, bool includeUserData = false);
         List<Beverage> GetBeverages();
         List<Beverage> GetBeveragesWithUser();
+        List<Beverage?> GetBeverageByUserId(int id, bool includeUserData = false);
     }
 }

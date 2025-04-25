@@ -42,6 +42,12 @@ namespace BeverageAPI.Controllers
             return beverageRepository.GetBeverageById(id, includeUserData);
         }
 
+        [HttpGet("/Beverages/{userId}", Name = "GetBeverageByUserId")]
+        public List<Beverage?> GetBeverageByUserId(int userId, [FromQuery] bool includeUserData = false) {
+            // This allows us to dynamically modify the query before executing it.
+            return beverageRepository.GetBeverageByUserId(userId, includeUserData);
+        }
+
         [HttpGet("/Beverages", Name = "GetBeverages")]
         public List<Beverage> GetBeverages() {
             return beverageRepository.GetBeverages();
