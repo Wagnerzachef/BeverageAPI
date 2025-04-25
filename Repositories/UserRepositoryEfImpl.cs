@@ -35,15 +35,6 @@ namespace BeverageAPI.Repositories{
             return dbContext.Users.ToList();
         }
 
-        public User GetUserWithBeverage(int id, [FromQuery] bool includeUserData = false)
-        {
-            var query = dbContext.Users.AsQueryable();
-            if (includeUserData) {
-                query = query.Include(user => user.Beverages);
-            }
-            return query.FirstOrDefault(user => user.Id == id);
-        }
-
         public User UpdateUserById(User userToChange)
         {
             try {

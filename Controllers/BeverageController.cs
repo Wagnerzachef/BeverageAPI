@@ -46,7 +46,7 @@ namespace BeverageAPI.Controllers
         public List<Beverage> GetBeverages() {
             return beverageRepository.GetBeverages();
         }
-        [HttpGet("/BeveragesWithUSers", Name = "GetBeveragesWithUser")]
+        [HttpGet("/BeveragesWithUsers", Name = "GetBeveragesWithUser")]
         public List<Beverage> GetBeveragesWithUser() {
             return beverageRepository.GetBeveragesWithUser();
         }

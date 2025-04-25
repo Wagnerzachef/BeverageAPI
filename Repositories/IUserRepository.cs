@@ -9,6 +9,6 @@ namespace BeverageAPI.Repositories{
         List<User> GetUsers();
         User UpdateUserById(User userToChange);
         void DeleteUserById(User userToDelete);
-        User GetUserWithBeverage(int id, [FromQuery] bool includeUserData = false);
+        
     }
 }
