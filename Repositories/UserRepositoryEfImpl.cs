@@ -42,7 +42,7 @@ namespace BeverageAPI.Repositories{
                 dbContext.SaveChanges();
             }
             catch (DbUpdateException){
-                Console.WriteLine("Error: Could not save changes to database.");
+                Console.WriteLine("Error: Could not save changes to database. Make sure that the USer yu are trying to change exists.");
             }
             
             return userToChange;

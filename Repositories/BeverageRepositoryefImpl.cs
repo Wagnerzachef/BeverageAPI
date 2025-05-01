@@ -18,32 +18,22 @@ namespace BeverageAPI.Repositories{
             return beverage;
         }
 
-        public Beverage? GetBeverageById(int id, bool includeUserData = false)
+        public void DeleteBeverageById(Beverage beverageToDelete)
         {
-            var query = dbContext.Beverages.AsQueryable();
-            if (includeUserData) {
-                query = query.Include(beverage => beverage.User);
-            }
-            return query.FirstOrDefault(beverage => beverage.Id == id);
+            dbContext.Beverages.Remove(beverageToDelete);
+            dbContext.SaveChanges();
         }
 
-        public List<Beverage?> GetBeverageByUserId(int id, bool includeUserData = false)
+        public Beverage GetBeverageById(int id)
         {
             var query = dbContext.Beverages.AsQueryable();
-            if (includeUserData) {
-                query = query.Include(beverage => beverage.User);
-            }
-            return query.Where(beverage => beverage.UserId == id).ToList();
+            
+            return query.FirstOrDefault(beverage => beverage.Id == id);
         }
 
         public List<Beverage> GetBeverages()
         {
             return dbContext.Beverages.ToList();
-        }
-
-        public List<Beverage> GetBeveragesWithUser()
-        {
-            return dbContext.Beverages.Include(beverage => beverage.User).ToList();
         }
     }
 }

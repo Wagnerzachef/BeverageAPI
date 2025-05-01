@@ -8,6 +8,7 @@ namespace BeverageAPI.Repositories
         public BeverageDbContext(DbContextOptions<BeverageDbContext> options) : base(options) { }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<Beverage> Beverages { get; set; }
+        public DbSet<Beverage> Beverages { get; set;}
+        public DbSet<BeverageLog> BeveragesLog { get; set; }
     }
 }

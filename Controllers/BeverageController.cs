@@ -24,9 +24,7 @@ namespace BeverageAPI.Controllers
             Beverage beverage = new Beverage (); 
                 beverage.BeverageName = request.BeverageName;
                 beverage.FluidOz = request.FluidOz;
-                beverage.CaffeineConent = request.CaffeineConent;
-                beverage.DateDrank = request.DateDrank;
-                beverage.UserId = request.UserId;
+                beverage.CaffeineContent = request.CaffeineConent;
             
 
             if(!ModelState.IsValid) {
@@ -37,24 +35,30 @@ namespace BeverageAPI.Controllers
         }
 
         [HttpGet("{id}", Name = "GetBeverageById")]
-        public Beverage? GetBeverageById(int id, [FromQuery] bool includeUserData = false) {
+        public Beverage? GetBeverageLogById(int id) {
             // This allows us to dynamically modify the query before executing it.
-            return beverageRepository.GetBeverageById(id, includeUserData);
+            return beverageRepository.GetBeverageById(id);
         }
 
-        [HttpGet("/Beverages/{userId}", Name = "GetBeverageByUserId")]
-        public List<Beverage?> GetBeverageByUserId(int userId, [FromQuery] bool includeUserData = false) {
-            // This allows us to dynamically modify the query before executing it.
-            return beverageRepository.GetBeverageByUserId(userId, includeUserData);
-        }
+        
 
-        [HttpGet("/Beverages", Name = "GetBeverages")]
-        public List<Beverage> GetBeverages() {
+        [HttpGet("/BeverageLog", Name = "GetBeverages")]
+        public List<Beverage> GetBeverageLogs() {
             return beverageRepository.GetBeverages();
         }
-        [HttpGet("/BeveragesWithUsers", Name = "GetBeveragesWithUser")]
-        public List<Beverage> GetBeveragesWithUser() {
-            return beverageRepository.GetBeveragesWithUser();
+        
+
+        [HttpDelete("{id}", Name = "DeleteBeverageById")]
+        public void DeleteBeverageById(int id) {
+            // Find the user we need to delete by its ID.
+            Beverage? beverageToDelete = beverageRepository.GetBeverageById(id);
+
+            if (beverageToDelete != null) {
+                beverageRepository.DeleteBeverageById(beverageToDelete);
+            } else {
+                throw new EntityNotFoundException($"Beverage with ID {id} could not be found. Unable to Delete user.");
+            }
+
         }
     }
 }

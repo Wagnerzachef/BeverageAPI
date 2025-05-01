@@ -4,9 +4,9 @@ namespace BeverageAPI.Repositories{
     public interface IBeverageRepository{
 
         Beverage CreateBeverage(Beverage beverage);
-        Beverage? GetBeverageById(int id, bool includeUserData = false);
+        Beverage GetBeverageById(int id);
+        void DeleteBeverageById(Beverage beverageToDelete);
         List<Beverage> GetBeverages();
-        List<Beverage> GetBeveragesWithUser();
-        List<Beverage?> GetBeverageByUserId(int id, bool includeUserData = false);
+        
     }
 }

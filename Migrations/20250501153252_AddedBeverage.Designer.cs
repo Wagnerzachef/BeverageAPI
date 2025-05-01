@@ -4,6 +4,7 @@ using BeverageAPI.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeverageAPI.Migrations
 {
     [DbContext(typeof(BeverageDbContext))]
-    partial class BeverageDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250501153252_AddedBeverage")]
+    partial class AddedBeverage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +37,7 @@ namespace BeverageAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("CaffeineContent")
+                    b.Property<float>("CaffeineConent")
                         .HasColumnType("real");
 
                     b.Property<float>("FluidOz")

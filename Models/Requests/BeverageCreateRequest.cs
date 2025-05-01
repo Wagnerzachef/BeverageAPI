@@ -13,10 +13,5 @@ namespace BeverageAPI.Models.Requests {
 
         public int CaffeineConent {get; set;}
 
-        [Required]
-        public DateTime DateDrank { get; set; }
-
-        [Required]
-        public int UserId { get; set; }
     }
 }

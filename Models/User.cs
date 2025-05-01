@@ -6,11 +6,11 @@ namespace BeverageAPI.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Age { get; set; }
+        public DateTime dob { get; set; }
 
         // Navigation property to represent one (user) to many (beverages) relationship.
         [JsonIgnore]
-        public List<Beverage> Beverages { get; set; }
+        public List<BeverageLog> BeveragesLog { get; set; }
         
     }
 }

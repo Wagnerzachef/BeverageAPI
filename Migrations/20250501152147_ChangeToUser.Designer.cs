@@ -4,6 +4,7 @@ using BeverageAPI.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeverageAPI.Migrations
 {
     [DbContext(typeof(BeverageDbContext))]
-    partial class BeverageDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250501152147_ChangeToUser")]
+    partial class ChangeToUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +25,7 @@ namespace BeverageAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("BeverageAPI.Models.Beverage", b =>
+            modelBuilder.Entity("BeverageAPI.Models.BeverageLog", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -34,37 +37,19 @@ namespace BeverageAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("CaffeineContent")
-                        .HasColumnType("real");
-
-                    b.Property<float>("FluidOz")
-                        .HasColumnType("real");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Beverages");
-                });
-
-            modelBuilder.Entity("BeverageAPI.Models.BeverageLog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BeverageId")
+                    b.Property<int>("CaffeineConent")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateDrank")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("FluidOz")
+                        .HasColumnType("int");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BeverageId");
 
                     b.HasIndex("UserId");
 
@@ -93,12 +78,6 @@ namespace BeverageAPI.Migrations
 
             modelBuilder.Entity("BeverageAPI.Models.BeverageLog", b =>
                 {
-                    b.HasOne("BeverageAPI.Models.Beverage", "beverage")
-                        .WithMany()
-                        .HasForeignKey("BeverageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("BeverageAPI.Models.User", "User")
                         .WithMany("BeveragesLog")
                         .HasForeignKey("UserId")
@@ -106,8 +85,6 @@ namespace BeverageAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-
-                    b.Navigation("beverage");
                 });
 
             modelBuilder.Entity("BeverageAPI.Models.User", b =>
