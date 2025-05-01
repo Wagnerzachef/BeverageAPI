@@ -24,11 +24,18 @@ namespace BeverageAPI.Repositories{
             dbContext.SaveChanges();
         }
 
+        public void deleteBeverageLogsByUserId(int userId)
+        {
+            dbContext.BeveragesLog.Where(beverage => beverage.UserId == userId).ExecuteDelete();
+            
+        }
+
         public BeverageLog? GetBeverageById(int id, bool includeUserData = false)
         {
             var query = dbContext.BeveragesLog.AsQueryable();
             if (includeUserData) {
                 query = query.Include(beverage => beverage.User);
+                query = query.Include(beverage => beverage.beverage);
             }
             return query.FirstOrDefault(beverage => beverage.Id == id);
         }
@@ -38,6 +45,7 @@ namespace BeverageAPI.Repositories{
             var query = dbContext.BeveragesLog.AsQueryable();
             if (includeUserData) {
                 query = query.Include(beverage => beverage.User);
+                query = query.Include(beverage => beverage.beverage);
             }
             return query.Where(beverage => beverage.UserId == id).ToList();
         }
@@ -49,7 +57,7 @@ namespace BeverageAPI.Repositories{
 
         public List<BeverageLog> GetBeveragesWithUser()
         {
-            return dbContext.BeveragesLog.Include(beverage => beverage.User).ToList();
+            return dbContext.BeveragesLog.Include(beverage => beverage.User).Include(beverage => beverage.beverage).ToList();
         }
     }
 }

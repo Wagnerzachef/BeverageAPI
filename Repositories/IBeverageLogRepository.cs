@@ -9,5 +9,6 @@ namespace BeverageAPI.Repositories{
         List<BeverageLog> GetBeverages();
         List<BeverageLog> GetBeveragesWithUser();
         List<BeverageLog?> GetBeverageByUserId(int id, bool includeUserData = false);
+        void deleteBeverageLogsByUserId(int userId);
     }
 }

@@ -20,7 +20,7 @@ namespace BeverageAPI.Controllers
 
         [HttpPost("", Name = "CreateBeverageLog")]
         public BeverageLog CreateBeverageLog(BeverageLogCreateRequest request) {
-            // Map BeverageCreateRequest to Beverage to create.
+            // Map BeverageLogCreateRequest to BeverageLog to create.
             BeverageLog beverage = new BeverageLog (); 
                 beverage.DateDrank = request.DateDrank;
                 beverage.UserId = request.UserId;
@@ -34,13 +34,13 @@ namespace BeverageAPI.Controllers
             }
         }
 
-        [HttpGet("{id}", Name = "GetBeverageLogById")]
+        [HttpGet("/BeverageLog/{id}", Name = "GetBeverageLogById")]
         public BeverageLog? GetBeverageLogById(int id, [FromQuery] bool includeUserData = false) {
             // This allows us to dynamically modify the query before executing it.
             return beverageRepository.GetBeverageById(id, includeUserData);
         }
 
-        [HttpGet("/BeverageLog/{userId}", Name = "GetBeverageLogByUserId")]
+        [HttpGet("/BeverageLogs/{userId}", Name = "GetBeverageLogByUserId")]
         public List<BeverageLog?> GetBeverageLogByUserId(int userId, [FromQuery] bool includeUserData = false) {
             // This allows us to dynamically modify the query before executing it.
             return beverageRepository.GetBeverageByUserId(userId, includeUserData);
@@ -65,6 +65,12 @@ namespace BeverageAPI.Controllers
             } else {
                 throw new EntityNotFoundException($"Beverage Log with ID {id} could not be found. Unable to Delete user.");
             }
+
+        }
+        [HttpDelete("/BeverageLog/Delete/{userId}", Name = "DeleteBeverageLogByUserId")]
+        public void DeleteBeverageByUserId(int userId) {
+            // Find the user we need to delete by its ID.
+            beverageRepository.deleteBeverageLogsByUserId(userId);
 
         }
     }

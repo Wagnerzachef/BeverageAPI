@@ -35,15 +35,15 @@ namespace BeverageAPI.Controllers
         }
 
         [HttpGet("{id}", Name = "GetBeverageById")]
-        public Beverage? GetBeverageLogById(int id) {
+        public Beverage? GetBeverageById(int id) {
             // This allows us to dynamically modify the query before executing it.
             return beverageRepository.GetBeverageById(id);
         }
 
         
 
-        [HttpGet("/BeverageLog", Name = "GetBeverages")]
-        public List<Beverage> GetBeverageLogs() {
+        [HttpGet("/Beverage", Name = "GetBeverages")]
+        public List<Beverage> GetBeverages() {
             return beverageRepository.GetBeverages();
         }
         
