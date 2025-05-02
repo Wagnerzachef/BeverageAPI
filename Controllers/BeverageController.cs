@@ -45,7 +45,13 @@ namespace BeverageAPI.Controllers
         public Beverage? GetBeverageById(int id) 
         {
             //gets beverage by id
-            return beverageRepository.GetBeverageById(id);
+            Beverage? beverageToGet = beverageRepository.GetBeverageById(id);
+
+            if (beverageToGet != null) {
+                return beverageRepository.GetBeverageById(id);
+            } else {
+                throw new EntityNotFoundException($"Beverage with ID {id} could not be found. Unable to Get Beverage.");
+            }
         }
 
         
@@ -53,7 +59,15 @@ namespace BeverageAPI.Controllers
         [HttpGet("/Beverages", Name = "GetBeverages")]
         public List<Beverage> GetBeverages() 
         {
-            return beverageRepository.GetBeverages();
+            
+            List<Beverage?> beverages = beverageRepository.GetBeverages();
+            //checks if the list has anything in it and if not
+            //throw an exception
+            if (beverages.Count != 0) {
+                return beverageRepository.GetBeverages();
+            } else {
+                throw new EntityNotFoundException($"Beverage Logs could not be found. Please add beverage logs.");
+            }
         }
         
 

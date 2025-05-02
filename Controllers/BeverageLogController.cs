@@ -44,33 +44,64 @@ namespace BeverageAPI.Controllers
         [HttpGet("/BeverageLog/{id}", Name = "GetBeverageLogById")]
         public BeverageLog? GetBeverageLogById(int id, [FromQuery] bool includeUserData = false) 
         {
-            return beverageRepository.GetBeverageLogById(id, includeUserData);
+            
+            BeverageLog? beverageLogToGet = beverageRepository.GetBeverageLogById(id);
+
+            if (beverageLogToGet != null) {
+                return beverageRepository.GetBeverageLogById(id, includeUserData);
+            } else {
+                throw new EntityNotFoundException($"Beverage Log with ID {id} could not be found. Unable to get Beverage Log.");
+            }
+            
         }
 
         [HttpGet("/BeverageLogs/{userId}", Name = "GetBeverageLogByUserId")]
         public List<BeverageLog?> GetBeverageLogByUserId(int userId, [FromQuery] bool includeUserData = false) 
         {
-            return beverageRepository.GetBeverageLogsByUserId(userId, includeUserData);
+            
+            List<BeverageLog?> beverageLogToGet = beverageRepository.GetBeverageLogsByUserId(userId);
+
+            if (beverageLogToGet.Count != 0) {
+                return beverageRepository.GetBeverageLogsByUserId(userId, includeUserData);
+            } else {
+                throw new EntityNotFoundException($"Beverage Logs with User ID {userId} could not be found. Unable to get Beverage Logs.");
+            }
         }
 
         /// <summary>
-        /// Gets a list of beverage logs without extra data
+        /// Gets a list of beverage logs
         /// </summary>
-        /// <returns>A list of beverage logs</returns>
+        /// <returns>A list of beverage log objects</returns>
+        /// <exception cref="EntityNotFoundException">Happens if the list is empty</exception>
         [HttpGet("/BeverageLog", Name = "GetBeverageLogs")]
         public List<BeverageLog> GetBeverageLogs() 
         {
-            return beverageRepository.GetBeverageLogs();
+            List<BeverageLog?> beverageLogs = beverageRepository.GetBeverageLogs();
+
+            if (beverageLogs.Count != 0) {
+                return beverageRepository.GetBeverageLogs();
+            } else {
+                throw new EntityNotFoundException($"Beverage Logs could not be found. Please add beverage logs.");
+            }
+            
         }
 
         /// <summary>
-        /// Gets a list of beverage logs with user and beverage data
+        /// Get a list of beverage logs with user and beverage data
         /// </summary>
-        /// <returns>a list of beverage logs</returns>
+        /// <returns>A list of users</returns>
+        /// <exception cref="EntityNotFoundException">If the list is empty</exception>
         [HttpGet("/BeverageLogWithUsers", Name = "GetBeverageLogsWithUser")]
         public List<BeverageLog> GetBeverageLogsWithUser() 
         {
-            return beverageRepository.GetBeverageLogsWithUser();
+            
+            List<BeverageLog?> beverageLogs = beverageRepository.GetBeverageLogsWithUser();
+
+            if (beverageLogs.Count != 0) {
+                return beverageRepository.GetBeverageLogsWithUser();
+            } else {
+                throw new EntityNotFoundException($"Unable to get Beverage Logs. Please add beverage logs.");
+            }
         }
 
         [HttpDelete("{id}", Name = "DeleteBeverageLogById")]
@@ -90,7 +121,14 @@ namespace BeverageAPI.Controllers
         public void DeleteBeverageLogsByUserId(int userId) 
         {
             // Find the beverage logs we need to delete by their user ID.
-            beverageRepository.deleteBeverageLogsByUserId(userId);
+            
+            List<BeverageLog?> beverageLogToDelete = beverageRepository.GetBeverageLogsByUserId(userId);
+
+            if (beverageLogToDelete.Count != 0) {
+                beverageRepository.deleteBeverageLogsByUserId(userId);
+            } else {
+                throw new EntityNotFoundException($"Beverage Logs with User ID {userId} could not be found. Unable to Delete Beverage Logs.");
+            }
 
         }
     }

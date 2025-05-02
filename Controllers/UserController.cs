@@ -36,15 +36,29 @@ namespace BeverageAPI.Controllers
         [HttpGet("{id}", Name = "GetUserById")]
         public User? GetUserById(int id) 
         {
-        // Returns the User with the given id (or null if not found).
-            return userRepository.GetUserById(id);
+        // Returns the User with the given id or throws an exception.
+            
+            User? UserToGet = userRepository.GetUserById(id);
+
+            if (UserToGet != null) {
+                return userRepository.GetUserById(id);
+            } else {
+                throw new EntityNotFoundException($"User with ID {id} could not be found. Unable to Get User.");
+            }
         }
 
         [HttpGet("/Users", Name = "GetUsers")]
         public List<User> GetUsers()
         {
          // Returns the list of Users (or an empty collection if none existed).
-          return userRepository.GetUsers();
+          
+          List<User?> users = userRepository.GetUsers();
+
+            if (users.Count != 0) {
+                return userRepository.GetUsers();
+            } else {
+                throw new EntityNotFoundException($"Users could not be found. Please add Users.");
+            }
         }
 
         [HttpPut("{id}", Name = "UpdateUserById")]
@@ -56,11 +70,11 @@ namespace BeverageAPI.Controllers
             // If it's null (not found) throw an exception stating such.
             if (userToUpdate != null) {
                 // Map our updated data to our existing ski brand.
-            userToUpdate.dob = request.dob;
-            userToUpdate.Name = request.Name;
+                userToUpdate.dob = request.dob;
+                userToUpdate.Name = request.Name;
 
-            // Return our updated ski brand to the requester.
-            return userRepository.UpdateUserById(userToUpdate);
+                // Return our updated ski brand to the requester.
+                return userRepository.UpdateUserById(userToUpdate);
             } else {
                 throw new EntityNotFoundException($"User with ID {id} could not be found. Unable to update user.");
             }
