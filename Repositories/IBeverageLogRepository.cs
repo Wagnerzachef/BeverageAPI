@@ -3,12 +3,12 @@ using BeverageAPI.Models;
 namespace BeverageAPI.Repositories{
     public interface IBeverageLogRepository{
 
-        BeverageLog CreateBeverage(BeverageLog beverage);
-        BeverageLog? GetBeverageById(int id, bool includeUserData = false);
-        void DeleteBeverageById(BeverageLog beverageLogToDelete);
-        List<BeverageLog> GetBeverages();
-        List<BeverageLog> GetBeveragesWithUser();
-        List<BeverageLog?> GetBeverageByUserId(int id, bool includeUserData = false);
+        BeverageLog CreateBeverageLog(BeverageLog beverage);
+        BeverageLog? GetBeverageLogById(int id, bool includeUserData = false);
+        void DeleteBeverageLogById(BeverageLog beverageLogToDelete);
+        List<BeverageLog> GetBeverageLogs();
+        List<BeverageLog> GetBeverageLogsWithUser();
+        List<BeverageLog?> GetBeverageLogsByUserId(int id, bool includeUserData = false);
         void deleteBeverageLogsByUserId(int userId);
     }
 }

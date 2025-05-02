@@ -19,7 +19,8 @@ namespace BeverageAPI.Controllers
         }
 
         [HttpPost("", Name = "CreateUser")]
-        public User CreateUser(UserCreateRequest request){
+        public User CreateUser(UserCreateRequest request)
+        {
             // Map the user create request to the actual ski brand.
             User user = new User();
             user.Name = request.Name;
@@ -33,19 +34,22 @@ namespace BeverageAPI.Controllers
         }
 
         [HttpGet("{id}", Name = "GetUserById")]
-        public User? GetUserById(int id) {
+        public User? GetUserById(int id) 
+        {
         // Returns the User with the given id (or null if not found).
             return userRepository.GetUserById(id);
         }
 
         [HttpGet("/Users", Name = "GetUsers")]
-        public List<User> GetUsers() {
+        public List<User> GetUsers()
+        {
          // Returns the list of Users (or an empty collection if none existed).
           return userRepository.GetUsers();
         }
 
         [HttpPut("{id}", Name = "UpdateUserById")]
-        public User UpdateUserById(int id, UserCreateRequest request) {
+        public User UpdateUserById(int id, UserCreateRequest request) 
+        {
             // Find the ski brand we need to update by its ID.
             User? userToUpdate = userRepository.GetUserById(id);
 
@@ -66,7 +70,8 @@ namespace BeverageAPI.Controllers
 
 
         [HttpDelete("{id}", Name = "DeleteUserById")]
-        public void DeleteUserById(int id) {
+        public void DeleteUserById(int id) 
+        {
             // Find the user we need to delete by its ID.
             User? userToDelete = userRepository.GetUserById(id);
 
