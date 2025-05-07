@@ -73,7 +73,7 @@ namespace BeverageAPI.Controllers
         /// </summary>
         /// <returns>A list of beverage log objects</returns>
         /// <exception cref="EntityNotFoundException">Happens if the list is empty</exception>
-        [HttpGet("/BeverageLog", Name = "GetBeverageLogs")]
+        [HttpGet("/BeverageLogs", Name = "GetBeverageLogs")]
         public List<BeverageLog> GetBeverageLogs() 
         {
             List<BeverageLog?> beverageLogs = beverageRepository.GetBeverageLogs();
@@ -91,7 +91,7 @@ namespace BeverageAPI.Controllers
         /// </summary>
         /// <returns>A list of users</returns>
         /// <exception cref="EntityNotFoundException">If the list is empty</exception>
-        [HttpGet("/BeverageLogWithUsers", Name = "GetBeverageLogsWithUser")]
+        [HttpGet("/BeverageLogsWithUsers", Name = "GetBeverageLogsWithUser")]
         public List<BeverageLog> GetBeverageLogsWithUser() 
         {
             
@@ -117,7 +117,7 @@ namespace BeverageAPI.Controllers
             }
 
         }
-        [HttpDelete("/BeverageLog/Delete/{userId}", Name = "DeleteBeverageLogByUserId")]
+        [HttpDelete("/BeverageLogs/Delete/{userId}", Name = "DeleteBeverageLogsByUserId")]
         public void DeleteBeverageLogsByUserId(int userId) 
         {
             // Find the beverage logs we need to delete by their user ID.
