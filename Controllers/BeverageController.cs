@@ -60,7 +60,7 @@ namespace BeverageAPI.Controllers
         public List<Beverage> GetBeverages() 
         {
             
-            List<Beverage?> beverages = beverageRepository.GetBeverages();
+            List<Beverage> beverages = beverageRepository.GetBeverages();
             //checks if the list has anything in it and if not
             //throw an exception
             if (beverages.Count != 0) {

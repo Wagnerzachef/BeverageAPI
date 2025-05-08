@@ -52,7 +52,7 @@ namespace BeverageAPI.Controllers
         {
          // Returns the list of Users (or an empty collection if none existed).
           
-          List<User?> users = userRepository.GetUsers();
+          List<User> users = userRepository.GetUsers();
 
             if (users.Count != 0) {
                 return userRepository.GetUsers();
