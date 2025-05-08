@@ -62,7 +62,7 @@ namespace BeverageAPI.Repositories{
             var query = dbContext.BeveragesLog.AsQueryable();
             if (includeUserData) {
                 query = query.Include(beverage => beverage.User);
-                query = query.Include(beverage => beverage.beverage);
+                query = query.Include(beverage => beverage.Beverage);
             }
             return query.FirstOrDefault(beverage => beverage.Id == id);
         }
@@ -73,12 +73,12 @@ namespace BeverageAPI.Repositories{
         /// <param name="userId">The user id the will be looked up</param>
         /// <param name="includeUserData">Boolean to include user and beverage data when looking up beverage logs</param>
         /// <returns>List of beverage log objects</returns>
-        public List<BeverageLog?> GetBeverageLogsByUserId(int userId, bool includeUserData = false)
+        public List<BeverageLog> GetBeverageLogsByUserId(int userId, bool includeUserData = false)
         {
             var query = dbContext.BeveragesLog.AsQueryable();
             if (includeUserData) {
                 query = query.Include(beverage => beverage.User);
-                query = query.Include(beverage => beverage.beverage);
+                query = query.Include(beverage => beverage.Beverage);
             }
             return query.Where(beverage => beverage.UserId == userId).ToList();
         }
@@ -98,7 +98,7 @@ namespace BeverageAPI.Repositories{
         /// <returns>A list of beverage logs with user and beverage data</returns>
         public List<BeverageLog> GetBeverageLogsWithUser()
         {
-            return dbContext.BeveragesLog.Include(beverage => beverage.User).Include(beverage => beverage.beverage).ToList();
+            return dbContext.BeveragesLog.Include(beverage => beverage.User).Include(beverage => beverage.Beverage).ToList();
         }
     }
 }

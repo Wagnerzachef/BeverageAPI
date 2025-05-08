@@ -24,7 +24,7 @@ namespace BeverageAPI.Controllers
             // Map the user create request to the actual ski brand.
             User user = new User();
             user.Name = request.Name;
-            user.dob = request.dob;
+            user.Dob = request.Dob;
 
             if(!ModelState.IsValid) {
                 throw new InvalidInputException("User Create Request is invalid", ModelState);
@@ -70,7 +70,7 @@ namespace BeverageAPI.Controllers
             // If it's null (not found) throw an exception stating such.
             if (userToUpdate != null) {
                 // Map our updated data to our existing ski brand.
-                userToUpdate.dob = request.dob;
+                userToUpdate.Dob = request.Dob;
                 userToUpdate.Name = request.Name;
 
                 // Return our updated ski brand to the requester.

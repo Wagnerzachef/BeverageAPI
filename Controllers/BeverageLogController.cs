@@ -56,10 +56,10 @@ namespace BeverageAPI.Controllers
         }
 
         [HttpGet("/BeverageLogs/{userId}", Name = "GetBeverageLogByUserId")]
-        public List<BeverageLog?> GetBeverageLogByUserId(int userId, [FromQuery] bool includeUserData = false) 
+        public List<BeverageLog> GetBeverageLogByUserId(int userId, [FromQuery] bool includeUserData = false) 
         {
             
-            List<BeverageLog?> beverageLogToGet = beverageRepository.GetBeverageLogsByUserId(userId);
+            List<BeverageLog> beverageLogToGet = beverageRepository.GetBeverageLogsByUserId(userId);
 
             if (beverageLogToGet.Count != 0) {
                 return beverageRepository.GetBeverageLogsByUserId(userId, includeUserData);
@@ -76,10 +76,10 @@ namespace BeverageAPI.Controllers
         [HttpGet("/BeverageLogs", Name = "GetBeverageLogs")]
         public List<BeverageLog> GetBeverageLogs() 
         {
-            List<BeverageLog?> beverageLogs = beverageRepository.GetBeverageLogs();
+            List<BeverageLog> beverageLogs = beverageRepository.GetBeverageLogs();
 
             if (beverageLogs.Count != 0) {
-                return beverageRepository.GetBeverageLogs();
+                return beverageLogs;
             } else {
                 throw new EntityNotFoundException($"Beverage Logs could not be found. Please add beverage logs.");
             }
@@ -95,10 +95,10 @@ namespace BeverageAPI.Controllers
         public List<BeverageLog> GetBeverageLogsWithUser() 
         {
             
-            List<BeverageLog?> beverageLogs = beverageRepository.GetBeverageLogsWithUser();
+            List<BeverageLog> beverageLogs = beverageRepository.GetBeverageLogsWithUser();
 
             if (beverageLogs.Count != 0) {
-                return beverageRepository.GetBeverageLogsWithUser();
+                return beverageLogs;
             } else {
                 throw new EntityNotFoundException($"Unable to get Beverage Logs. Please add beverage logs.");
             }
@@ -122,7 +122,7 @@ namespace BeverageAPI.Controllers
         {
             // Find the beverage logs we need to delete by their user ID.
             
-            List<BeverageLog?> beverageLogToDelete = beverageRepository.GetBeverageLogsByUserId(userId);
+            List<BeverageLog> beverageLogToDelete = beverageRepository.GetBeverageLogsByUserId(userId);
 
             if (beverageLogToDelete.Count != 0) {
                 beverageRepository.deleteBeverageLogsByUserId(userId);

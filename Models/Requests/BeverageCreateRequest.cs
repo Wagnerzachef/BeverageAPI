@@ -11,7 +11,7 @@ namespace BeverageAPI.Models.Requests {
         [Required]
         public int FluidOz {get; set;}
 
-        public int CaffeineConent {get; set;}
+        public int CaffeineContent {get; set;}
 
     }
 }

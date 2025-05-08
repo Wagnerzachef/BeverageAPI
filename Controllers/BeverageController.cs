@@ -31,7 +31,7 @@ namespace BeverageAPI.Controllers
             Beverage beverage = new Beverage (); 
                 beverage.BeverageName = request.BeverageName;
                 beverage.FluidOz = request.FluidOz;
-                beverage.CaffeineContent = request.CaffeineConent;
+                beverage.CaffeineContent = request.CaffeineContent;
             
 
             if(!ModelState.IsValid) {

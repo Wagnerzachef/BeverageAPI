@@ -15,6 +15,6 @@ namespace BeverageAPI.Models {
         // Navigation Property
         // This allows you to access the related User object directly in code.
         public User User { get; set; }
-        public Beverage beverage {get; set;}
+        public Beverage Beverage {get; set;}
     }
 }
